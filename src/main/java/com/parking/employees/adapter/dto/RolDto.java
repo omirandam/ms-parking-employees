@@ -2,7 +2,7 @@ package com.parking.employees.adapter.dto;
 
 import org.springframework.beans.BeanUtils;
 
-import com.parking.employees.adapter.entity.Rol;
+import com.parking.employees.domain.Rol;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

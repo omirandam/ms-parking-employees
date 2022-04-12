@@ -1,11 +1,11 @@
 package com.parking.employees.adapter.dto;
 
-import java.sql.Date;
-import java.text.DateFormat;
+import java.time.LocalDate;
 
 import org.springframework.beans.BeanUtils;
 
-import com.parking.employees.adapter.entity.Employee;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.parking.employees.domain.Employee;
 
 
 import lombok.AllArgsConstructor;
@@ -25,7 +25,8 @@ public class EmployeeDto {
 
 	public String lastname;
 
-	public Date birthday;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+	public LocalDate birthday;
 
 	public Boolean state;
 	

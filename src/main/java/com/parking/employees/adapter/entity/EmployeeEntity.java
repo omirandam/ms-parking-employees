@@ -1,6 +1,6 @@
 package com.parking.employees.adapter.entity;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -24,7 +24,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Entity
 @Table(name = "employee")
-public class Employee {
+public class EmployeeEntity {
 
 	@Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -40,7 +40,7 @@ public class Employee {
 	private String lastname;
 
 	@Column(nullable = false)
-	private Date birthday;
+	private LocalDate birthday;
 	
 	@Column(nullable = false)
 	private Boolean state;
@@ -51,9 +51,9 @@ public class Employee {
 	@Column(nullable = false)
 	private String paswword;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.MERGE)
 	@Fetch(FetchMode.JOIN)
 	@JoinColumn(name = "id_rol")
-	private Rol rol;
+	private RolEntity rol;
 	
 }

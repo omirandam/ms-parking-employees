@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.parking.employees.adapter.dto.EmployeeDto;
-import com.parking.employees.adapter.entity.Employee;
+import com.parking.employees.domain.Employee;
 import com.parking.employees.application.port.in.IEmployeeFindAll;
 import com.parking.employees.application.port.out.IEmployeeOut;
 
@@ -16,6 +16,10 @@ public class EmployeeFindAllUseCase implements IEmployeeFindAll {
 
 	@Autowired
 	private IEmployeeOut iemployeeOut;
+	
+	public EmployeeFindAllUseCase(IEmployeeOut iemployeeOut) {
+		this.iemployeeOut = iemployeeOut;
+	}
 	
 	@Override
 	public List<EmployeeDto> findAll(){
