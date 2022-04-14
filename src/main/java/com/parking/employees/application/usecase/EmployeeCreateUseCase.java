@@ -1,6 +1,7 @@
 package com.parking.employees.application.usecase;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.parking.employees.application.port.in.IEmployeeCreate;
@@ -20,11 +21,15 @@ public class EmployeeCreateUseCase implements IEmployeeCreate {
 	@Autowired
 	private RolService rolservice;
 	
+	@Autowired
+	private BCryptPasswordEncoder encoder;
+	
 	@Override
 	public void create(Employee employee, Integer idRol){
 		try {
 			Rol rol = rolservice.findById(idRol);
 			employee.setRol(rol);
+			employee.setPaswword(encoder.encode(employee.getPaswword()));
 			
 			iemployeeOut.create(employee);			
 		} 

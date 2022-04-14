@@ -2,6 +2,7 @@ package com.parking.employees.application.usecase;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.parking.employees.application.port.in.IEmployeeUpdate;
@@ -21,11 +22,15 @@ public class EmployeeUpdateUseCase implements IEmployeeUpdate {
 	@Autowired
 	private RolService rolservice;
 	
+	@Autowired
+	private BCryptPasswordEncoder encoder;
+	
 	@Override
 	public void update(Integer id, Employee employee, Integer idRol){
 		try {
 			Rol rol = rolservice.findById(idRol);
 			employee.setRol(rol);
+			employee.setPaswword(encoder.encode(employee.getPaswword()));
 			
 			iemployeeOut.update(id, employee);
 	    }
