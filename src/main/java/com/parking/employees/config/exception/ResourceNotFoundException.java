@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 public class ResourceNotFoundException extends GenericException {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	public ResourceNotFoundException(String errorMessage) {
 		super(errorMessage);
 	}

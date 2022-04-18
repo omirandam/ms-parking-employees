@@ -16,4 +16,6 @@ public interface IEmployeeOut {
 
 	public void update(Integer id, Employee employee);
 	
+	public Employee findByUsername(String username); 
+	
 }

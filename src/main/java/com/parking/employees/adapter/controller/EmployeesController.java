@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,45 +36,45 @@ import com.parking.employees.application.port.in.IEmployeeUpdate;
 })
 @RestController
 @RequestMapping("api")
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 public class EmployeesController {
 
 	@Autowired
-    private IEmployeeFindAll findAll_in;
+    private IEmployeeFindAll findAllIn;
 	@Autowired
-    private IEmployeeFind find_in;
+    private IEmployeeFind findIn;
 	@Autowired
-    private IEmployeeCreate create_in;
+    private IEmployeeCreate createIn;
 	@Autowired
-    private IEmployeeUpdate update_in;
+    private IEmployeeUpdate updateIn;
 	@Autowired
-    private IEmployeeDelete delete_in;
+    private IEmployeeDelete deleteIn;
 
-	
 	@GetMapping("/employee")
     public ResponseEntity<List<EmployeeDto>>findAll(){
-    	 return new ResponseEntity<>(findAll_in.findAll(), HttpStatus.OK);
+    	 return new ResponseEntity<>(findAllIn.findAll(), HttpStatus.OK);
     }
 	
 	@GetMapping("/employee/{id}")
     public ResponseEntity<EmployeeDto>find(@PathVariable Integer id){
-    	 return new ResponseEntity<>(find_in.find(id), HttpStatus.OK);
+    	 return new ResponseEntity<>(findIn.find(id), HttpStatus.OK);
     }
 	
 	@PostMapping("/employee")
     public ResponseEntity<String> create(@RequestBody @Valid EmployeeRequest employeeRequest){
-		create_in.create(employeeRequest.toEntity(), employeeRequest.getIdrol());
+		createIn.create(employeeRequest.toEntity(), employeeRequest.getIdrol());
         return new ResponseEntity<>("Ok", HttpStatus.OK);
     }
-
+	
     @PutMapping("/employee/{id}")
     public ResponseEntity<String> update(@PathVariable Integer id,@RequestBody @Valid EmployeeRequest employeeRequest){
-    	update_in.update(id, employeeRequest.toEntity(), employeeRequest.getIdrol());
+    	updateIn.update(id, employeeRequest.toEntity(), employeeRequest.getIdrol());
         return new ResponseEntity<>("Ok", HttpStatus.OK);
     }
     
     @DeleteMapping("/employee/{id}")
     public ResponseEntity<String> delete(@PathVariable Integer id){
-    	delete_in.delete(id);
+    	deleteIn.delete(id);
         return new ResponseEntity<>("Ok", HttpStatus.OK);
     }
 	

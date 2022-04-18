@@ -11,23 +11,23 @@ import lombok.NoArgsConstructor;
 @Data
 public class Employee {
 
-	public Integer id;
+	private Integer id;
 
-	public String identity_document;
+	private String identity_document;
 
-	public String name;
+	private String name;
 
-	public String lastname;
+	private String lastname;
 
-	public LocalDate birthday;
+	private LocalDate birthday;
 
-	public Boolean state;
+	private Boolean state;
 	
-	public String username;
+	private String username;
 
-	public String paswword;
+	private String paswword;
 	
-	public Rol rol;
+	private Rol rol;
 	
 	
 }

@@ -60,7 +60,6 @@ public class EmployeeJdbcAdapter implements IEmployeeOut {
 		}).collect(Collectors.toList());
 	}
 	
-	
 	@Override
 	public void delete(Integer id) {
 		try {
@@ -132,5 +131,22 @@ public class EmployeeJdbcAdapter implements IEmployeeOut {
 	    }
 	
 	}
+
+	@Override
+	public Employee findByUsername(String username) {
+		EmployeeEntity employeeEntity = employeeRepository.findByUsername(username);
+		Employee employee = null;
+		if(employeeEntity != null) {
+			employee = new Employee();
+			Rol rol = new Rol();
+					
+			BeanUtils.copyProperties(employeeEntity, employee);
+			BeanUtils.copyProperties(employeeEntity.getRol(), rol);
+			employee.setRol(rol);
+			
+		}		
+		return employee;
+	}
+	
 	
 }
