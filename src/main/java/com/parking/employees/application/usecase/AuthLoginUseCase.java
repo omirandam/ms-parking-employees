@@ -21,15 +21,12 @@ public class AuthLoginUseCase implements IAuthLoginQuery{
 	
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
-	private JwtUtils jwtUtils;
-	
 	@Value("${jwt.secret}")
 	private String jwtSecret;
 	
-	public AuthLoginUseCase(IEmployeeOut iemployeeOut, BCryptPasswordEncoder bCryptPasswordEncoder, JwtUtils jwtUtils) {
+	public AuthLoginUseCase(IEmployeeOut iemployeeOut, BCryptPasswordEncoder bCryptPasswordEncoder) {
 		this.iemployeeOut = iemployeeOut;
 		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-		this.jwtUtils = jwtUtils;
 		}
 
 	@SneakyThrows
@@ -39,7 +36,7 @@ public class AuthLoginUseCase implements IAuthLoginQuery{
 		Employee employee = iemployeeOut.findByUsername(authlogin.getUsername());
 		if(employee != null) {
 			if(bCryptPasswordEncoder.matches(authlogin.getPassword(), employee.getPaswword())) {
-				String token = jwtUtils.createToken(employee.getUsername(), employee.getRol().getName(),jwtSecret);	
+				String token = JwtUtils.createToken(employee.getUsername(), employee.getRol().getName(),jwtSecret);	
 				result = token;
 			}
 			else {

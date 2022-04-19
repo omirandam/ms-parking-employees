@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import lombok.experimental.UtilityClass;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
