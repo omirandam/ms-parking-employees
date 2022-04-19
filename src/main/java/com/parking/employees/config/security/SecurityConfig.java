@@ -43,7 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		.addFilterBefore(new FilterJwt(key,AUTH_WHITELIST), UsernamePasswordAuthenticationFilter.class)
 		.authorizeRequests()
 		.antMatchers(AUTH_WHITELIST).permitAll()
-		//.antMatchers("/api/parameter/**").hasAnyRole("ADMIN")
+		.antMatchers("/api/employee").hasAnyRole("ADMIN")
 		.anyRequest().authenticated()
 		.and()
 		.headers()	        
