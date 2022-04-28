@@ -17,16 +17,16 @@ import lombok.SneakyThrows;
 @Service
 public class AuthLoginUseCase implements IAuthLoginQuery{
 
-	private IEmployeeOut iemployeeOut;
+	private final IEmployeeOut iemployeeOut;
 	
-	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+	private final String jwtSecret;
 	
-	@Value("${jwt.secret}")
-	private String jwtSecret;
-	
-	public AuthLoginUseCase(IEmployeeOut iemployeeOut, BCryptPasswordEncoder bCryptPasswordEncoder) {
+	public AuthLoginUseCase(IEmployeeOut iemployeeOut, BCryptPasswordEncoder bCryptPasswordEncoder, @Value("${jwt.secret}") String jwtSecret) {
 		this.iemployeeOut = iemployeeOut;
 		this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+		this.jwtSecret = jwtSecret;
 		}
 
 	@SneakyThrows

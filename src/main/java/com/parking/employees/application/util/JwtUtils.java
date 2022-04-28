@@ -1,5 +1,6 @@
 package com.parking.employees.application.util;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,7 +26,7 @@ public class JwtUtils {
 				.setIssuedAt(new Date())
 				.setExpiration(new Date(System.currentTimeMillis() + TOKEN_EXPIRATION_TIME))
 				.setHeaderParam("typ", "JWT")
-				.signWith(SignatureAlgorithm.HS256, jwtSecret.getBytes("UTF-8")).compact();
+				.signWith(SignatureAlgorithm.HS256, jwtSecret.getBytes(StandardCharsets.UTF_8)).compact();
 	}
 	
 }

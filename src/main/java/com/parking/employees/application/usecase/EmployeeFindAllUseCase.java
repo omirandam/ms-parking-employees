@@ -15,7 +15,7 @@ import com.parking.employees.application.port.out.IEmployeeOut;
 public class EmployeeFindAllUseCase implements IEmployeeFindAll {
 
 	@Autowired
-	private IEmployeeOut iemployeeOut;
+	private final IEmployeeOut iemployeeOut;
 	
 	public EmployeeFindAllUseCase(IEmployeeOut iemployeeOut) {
 		this.iemployeeOut = iemployeeOut;

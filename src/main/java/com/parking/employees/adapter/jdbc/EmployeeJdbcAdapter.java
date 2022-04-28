@@ -23,10 +23,10 @@ public class EmployeeJdbcAdapter implements IEmployeeOut {
 
 
 	@Autowired
-	private EmployeeRepository employeeRepository;
+	private final EmployeeRepository employeeRepository;
 	
 	@Autowired
-	private RolRepository rolRepository;
+	private final RolRepository rolRepository;
 	
 	public EmployeeJdbcAdapter(EmployeeRepository employeeRepository, RolRepository rolRepository) {
 		this.employeeRepository = employeeRepository;
@@ -45,7 +45,7 @@ public class EmployeeJdbcAdapter implements IEmployeeOut {
 			return employee;
 		}
 		else
-			throw new ResourceNotFoundException("There is no house with that id.");
+			throw new ResourceNotFoundException("There is no employee with that id.");
 	}
 	
 	@Override
@@ -63,12 +63,12 @@ public class EmployeeJdbcAdapter implements IEmployeeOut {
 	@Override
 	public void delete(Integer id) {
 		try {
-			Optional<EmployeeEntity>optionalHouse = employeeRepository.findById(id);
-			if(optionalHouse.isPresent()) {
-				employeeRepository.delete(optionalHouse.get());
+			Optional<EmployeeEntity>optionalEmployee = employeeRepository.findById(id);
+			if(optionalEmployee.isPresent()) {
+				employeeRepository.delete(optionalEmployee.get());
 			}
 			else
-				throw new ResourceNotFoundException("There is no house with that id.");
+				throw new ResourceNotFoundException("There is no employee with that id.");
 	    }
 		catch (ResourceNotFoundException exception) {
 			throw exception;
@@ -100,7 +100,7 @@ public class EmployeeJdbcAdapter implements IEmployeeOut {
 				employeeRepository.save(employeeEntity);
 			}
 			else
-				throw new ResourceNotFoundException("There is no house with that id.");
+				throw new ResourceNotFoundException("There is no employee with that id.");
 	    }
 		catch (ResourceNotFoundException exception) {
 			throw exception;
