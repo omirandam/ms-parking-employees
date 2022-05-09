@@ -47,19 +47,20 @@ public class EmployeeMother {
 
     public static Employee dummyEmployeeFind(){
         Employee employee = new Employee(1,"1234567892","Marlene","Melian",LocalDate.of(1973,4,14),true,"omirandam","123", null);
-        Rol rol = new Rol(1,"Admin", "Admin");
+        Rol rol = new Rol(1,"ADMIN", "ADMIN");
         employee.setRol(rol);
 
         return  employee;
     }
+
     public static RolEntity dummyRolEntity(){
-        return  new RolEntity(1,"Admin", "Admin");
+        return  new RolEntity(1,"ADMIN", "ADMIN");
     }
 
     public static List<EmployeeEntity> dummyEmployeesEntitys(){
         List<EmployeeEntity> listEmployees = new ArrayList<EmployeeEntity>();
 
-        RolEntity rol = new RolEntity(1, "Admin","Admin");
+        RolEntity rol = new RolEntity(1, "ADMIN","ADMIN");
         EmployeeEntity employee = new EmployeeEntity(1,"1234567892","Marlene","Melian",LocalDate.of(1973,4,14),true,"omirandam","123", rol);
 
         listEmployees.add(employee);

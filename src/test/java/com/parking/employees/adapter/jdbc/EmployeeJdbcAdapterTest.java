@@ -6,19 +6,14 @@ import com.parking.employees.adapter.entity.RolEntity;
 import com.parking.employees.adapter.jpa.EmployeeRepository;
 import com.parking.employees.adapter.jpa.RolRepository;
 import com.parking.employees.domain.Employee;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockito.junit.jupiter.MockitoSettings;
-import org.mockito.quality.Strictness;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -26,7 +21,6 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-@MockitoSettings(strictness = Strictness.LENIENT)
 class EmployeeJdbcAdapterTest {
 
     @InjectMocks
@@ -41,54 +35,58 @@ class EmployeeJdbcAdapterTest {
     List<EmployeeEntity> employeeList = EmployeeMother.dummyEmployeesEntitys();
     Employee employee = EmployeeMother.dummyEmployeeFind();
 
-    @BeforeEach
-    void setUp() {
-        when(employeeRepository.findAll()).thenReturn(employeeList);
-
-        Optional<EmployeeEntity> optionalEmployee = Optional.of(employeeList.get(0));
-        when(employeeRepository.findById(anyInt())).thenReturn(optionalEmployee);
-        when(employeeRepository.findByUsername(any())).thenReturn(employeeList.get(0));
-
-        doNothing().when(employeeRepository).delete(any());
-
-        Optional<RolEntity> optionalRol = Optional.of(EmployeeMother.dummyRolEntity());
-        when(rolRepository.findById(anyInt())).thenReturn(optionalRol);
-
-       // doNothing().when(employeeRepository).save(any());
-    }
-
     @Test
     void findByUsername() {
+        when(employeeRepository.findByUsername(any())).thenReturn(employeeList.get(0));
+
         assertEquals(employee, employeeJdbcAdapter.findByUsername("omirandam"));
     }
 
     @Test
     void find() {
+        Optional<EmployeeEntity> optionalEmployee = Optional.of(employeeList.get(0));
+        when(employeeRepository.findById(anyInt())).thenReturn(optionalEmployee);
+
         assertEquals(employee, employeeJdbcAdapter.find(0));
     }
 
     @Test
     void findAll() {
+        when(employeeRepository.findAll()).thenReturn(employeeList);
+
         assertFalse(employeeJdbcAdapter.findAll().isEmpty());
     }
 
     @Test
     void delete() {
+        Optional<EmployeeEntity> optionalEmployee = Optional.of(employeeList.get(0));
+        when(employeeRepository.findById(anyInt())).thenReturn(optionalEmployee);
+        doNothing().when(employeeRepository).delete(any());
+
         employeeJdbcAdapter.delete(1);
         verify(employeeRepository).delete(employeeList.get(0));
     }
-/*
+
     @Test
     void update() {
+        Optional<EmployeeEntity> optionalEmployee = Optional.of(employeeList.get(0));
+        when(employeeRepository.findById(anyInt())).thenReturn(optionalEmployee);
+        Optional<RolEntity> optionalRol = Optional.of(EmployeeMother.dummyRolEntity());
+        when(rolRepository.findById(anyInt())).thenReturn(optionalRol);
+
+        when(employeeRepository.save(any(EmployeeEntity.class))).thenReturn(optionalEmployee.get());
+
         employeeJdbcAdapter.update(1,employee);
         verify(employeeRepository).save(employeeList.get(0));
     }
 
     @Test
     void create() {
-       employeeJdbcAdapter.create(employee);
-       verify(employeeRepository).save(employeeList.get(0));
+        when(employeeRepository.save(any(EmployeeEntity.class))).thenReturn(employeeList.get(0));
+
+        employeeJdbcAdapter.create(employee);
+        verify(employeeRepository).save(employeeList.get(0));
     }
-*/
+
 
 }

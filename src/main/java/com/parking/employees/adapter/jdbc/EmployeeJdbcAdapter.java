@@ -21,11 +21,8 @@ import com.parking.employees.adapter.jpa.RolRepository;
 @Service
 public class EmployeeJdbcAdapter implements IEmployeeOut {
 
-
-	@Autowired
 	private final EmployeeRepository employeeRepository;
-	
-	@Autowired
+
 	private final RolRepository rolRepository;
 	
 	public EmployeeJdbcAdapter(EmployeeRepository employeeRepository, RolRepository rolRepository) {

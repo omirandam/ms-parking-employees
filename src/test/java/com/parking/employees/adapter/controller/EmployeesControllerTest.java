@@ -3,7 +3,6 @@ package com.parking.employees.adapter.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.parking.employees.EmployeeMother;
 import com.parking.employees.application.port.in.*;
-import com.parking.employees.application.service.UserService;
 import com.parking.employees.application.util.JwtUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,11 +30,11 @@ class EmployeesControllerTest {
     @MockBean
     IEmployeeFind find_in;
     @MockBean
-    IEmployeeCreate create_in;
+    IEmployeeCreate createIn;
     @MockBean
-    IEmployeeUpdate update_in;
+    IEmployeeUpdate updateIn;
     @MockBean
-    IEmployeeDelete delete_in;
+    IEmployeeDelete deleteIn;
 
     JwtUtils jwtUtils;
 
@@ -44,14 +43,20 @@ class EmployeesControllerTest {
     @Autowired
     ObjectMapper objectMapper;
 
-    @MockBean
-    UserService userService;
-
-
     @BeforeEach
     void setUp() {
         when(findAll_in.findAll()).thenReturn(EmployeeMother.dummy());
         when(find_in.find(1)).thenReturn(EmployeeMother.dummy().get(0));
+    }
+
+    @Test
+    void forbiddenFindAll() throws Exception {
+
+        this.mockMvc.perform(
+                        get(URL_GET_EMPLOYEE).header("Authorization", "Bearer "+jwtUtils.createToken("dmirandam","EMPLOYEE", "seriedad"))
+                )
+                .andDo(print())
+                .andExpect(status().isForbidden());
     }
 
     @Test
@@ -120,6 +125,15 @@ class EmployeesControllerTest {
                 )
                 .andDo(print())
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    void notFoundDelete() throws Exception {
+        this.mockMvc.perform(
+                        MockMvcRequestBuilders.delete(URL_GET_EMPLOYEE+"/1000").header("Authorization", "Bearer "+jwtUtils.createToken("omirandam","ADMIN", "seriedad"))
+                )
+                .andDo(print())
+                .andExpect(status().isNotFound());
     }
 
 }

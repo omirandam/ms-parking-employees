@@ -18,10 +18,9 @@ public class RolService {
 	private RolRepository rolRepository;
 	
 	public Rol findById(Integer id) {	
-		Optional<RolEntity>optional = rolRepository.findById(id);
-		Rol rol = new Rol();	
-		BeanUtils.copyProperties(optional.get(), rol);
-		
+		Optional<RolEntity>optionalRol = rolRepository.findById(id);
+		Rol rol = new Rol();
+		optionalRol.ifPresent(e -> BeanUtils.copyProperties(e, rol));
 		return rol;
 	}
 }
